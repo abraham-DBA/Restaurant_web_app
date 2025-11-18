@@ -31,7 +31,7 @@ const PopularMenus = () => {
 
         {/* Menus Grid - 4 cards per row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {popularMenus.slice(0,4).map((menu) => (
+          {popularMenus.slice(0,8).map((menu) => (
             <div
               key={menu.id}
               className="group bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1 overflow-hidden cursor-pointer border border-gray-100"

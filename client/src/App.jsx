@@ -8,6 +8,7 @@ import ContactPage from './pages/ContactPage'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
 import Footer from './components/Footer'
+import OrdersPage from './pages/OrdersPage'
 
 const App = () => {
   return (
@@ -19,7 +20,8 @@ const App = () => {
         <Route path='/restaurants' element={<RestaurantsPage />} />
         <Route path='/about' element={<AboutPage />} />
         <Route path='/contact' element={<ContactPage />} />
-        <Route path='/login' element={<LoginPage />} />
+        <Route path='/orders' element={<OrdersPage />} />
+        {/* <Route path='/login' element={<LoginPage />} /> */}
         <Route path='/register' element={<SignupPage />} />
       </Routes>
       <Footer/>

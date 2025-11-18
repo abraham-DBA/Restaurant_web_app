@@ -1,10 +1,20 @@
 // components/Navbar.jsx
+import { useClerk, UserButton, useUser } from '@clerk/clerk-react';
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const NavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const location = useLocation();
+
+  const {openSignIn} = useClerk();
+  const { user, isSignedIn } = useUser();
+  const navigate = useNavigate()
+    const location = useLocation();
+
+  const BookIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M304 70.1C313.1 61.9 326.9 61.9 336 70.1L568 278.1C577.9 286.9 578.7 302.1 569.8 312C560.9 321.9 545.8 322.7 535.9 313.8L527.9 306.6L527.9 511.9C527.9 547.2 499.2 575.9 463.9 575.9L175.9 575.9C140.6 575.9 111.9 547.2 111.9 511.9L111.9 306.6L103.9 313.8C94 322.6 78.9 321.8 70 312C61.1 302.2 62 287 71.8 278.1L304 70.1zM320 120.2L160 263.7L160 512C160 520.8 167.2 528 176 528L224 528L224 424C224 384.2 256.2 352 296 352L344 352C383.8 352 416 384.2 416 424L416 528L464 528C472.8 528 480 520.8 480 512L480 263.7L320 120.3zM272 528L368 528L368 424C368 410.7 357.3 400 344 400L296 400C282.7 400 272 410.7 272 424L272 528z"/></svg>
+  )
+
 
   const navLinks = [
     { path: '/', label: 'Home' },
@@ -63,21 +73,37 @@ const NavBar = () => {
 
           {/* Desktop Auth Buttons */}
           <div className="hidden lg:flex items-center space-x-3">
-            <Link 
-              to="/login" 
+            {user ? 
+            (<UserButton>
+              <UserButton.MenuItems>
+                <UserButton.Action label='My Orders' labelIcon={<BookIcon/>} onClick={ () => navigate('/orders') } />
+              </UserButton.MenuItems>
+            </UserButton>)
+            :
+            (<Link 
+              // to="/login"
+              onClick={openSignIn} 
               className="px-4 py-2 border border-gray-800 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-50 hover:border-gray-400 transition-all duration-200"
             >
               Login
-            </Link>
-            <Link 
-              to="/register" 
-              className="px-4 py-2 bg-red-800 text-white rounded-md text-sm font-medium hover:bg-red-700 transition-all duration-200"
-            >
-              Register
-            </Link>
+            </Link>)  
+          }
           </div>
 
           {/* Mobile Menu Button */}
+         <div className="lg:hidden">
+            {user && (
+              <UserButton>
+                <UserButton.MenuItems>
+                  <UserButton.Action 
+                    label="My Orders" 
+                    labelIcon={<BookIcon/>} 
+                    onClick={() => navigate('/orders')} 
+                  />
+                </UserButton.MenuItems>
+              </UserButton>
+            )}
+        </div>
           <button 
             className="lg:hidden flex flex-col space-y-1 p-2 rounded-md hover:bg-gray-100 transition-colors duration-200"
             onClick={toggleMobileMenu}
@@ -119,20 +145,20 @@ const NavBar = () => {
             
             {/* Mobile Auth Buttons */}
             <div className="flex space-x-2 pt-3 border-t border-gray-200 mt-2">
-              <Link 
+              {!user && <Link 
                 to="/login" 
                 className="flex-1 px-3 py-2 border border-gray-300 text-gray-700 rounded-md text-sm font-medium text-center hover:bg-gray-50 transition-all duration-200"
-                onClick={closeMobileMenu}
+                onClick={openSignIn} 
               >
                 Login
-              </Link>
-              <Link 
+              </Link>}
+              {/* <Link 
                 to="/register" 
                 className="flex-1 px-3 py-2 bg-red-600 text-white rounded-md text-sm font-medium text-center hover:bg-red-700 transition-all duration-200"
                 onClick={closeMobileMenu}
               >
                 Register
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>

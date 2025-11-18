@@ -18,7 +18,7 @@ const PopularRestaurants = () => {
 
         {/* Restaurants Grid - 4 cards per row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {popularRestaurants.slice(0, 4).map((restaurant) => (
+          {popularRestaurants.slice(0, 8).map((restaurant) => (
             <div
               key={restaurant.id}
               className="group bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1 overflow-hidden cursor-pointer"
